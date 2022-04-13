@@ -5,8 +5,8 @@ import (
 	"log"
 	"net"
 	"tasks/Instagram_clone/insta_post/config"
-	pc "tasks/Instagram_clone/insta_post/genproto/comment_proto"
-	pu "tasks/Instagram_clone/insta_post/genproto/post_proto"
+	_ "github.com/lib/pq"
+	pp "tasks/Instagram_clone/insta_post/genproto/post_proto"
 	"tasks/Instagram_clone/insta_post/service"
 	grpcClient "tasks/Instagram_clone/insta_post/service/grpc_client"
 
@@ -26,29 +26,30 @@ func main() {
 		config.PostgresDatabase,
 	)
 
+	grpcClient, err := grpcClient.New(config)
+	if err != nil {
+		log.Fatal("grpc dial error", err)
+	}
+
 	psql, err := sqlx.Connect("postgres", psqlText)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	client, err := grpcClient.New(config)
-	if err != nil {
-		log.Fatal("grpc dial error", err)
-	}
-
-	PostService := service.NewPostService(psql, client)
+	PostService := service.NewPostService(psql, grpcClient)
 
 	lis, err := net.Listen("tcp", config.Port)
 	if err != nil {
-		log.Fatal("Error while listening: %v", err)
+		log.Fatal("Error while listening:", err)
 	}
 
 	s := grpc.NewServer()
-	pc.RegisterCommentServiceServer(s, PostService)
-	pu.RegisterPostServiceServer(s, PostService)
 	reflection.Register(s)
 
+	pp.RegisterPostServiceServer(s, PostService)
+	log.Println("Main server runnning", config.Port)
+
 	if err = s.Serve(lis); err != nil {
-		log.Fatal("Error while listening: %v", err)
+		log.Fatal("Error while listening:", err)
 	}
 }
