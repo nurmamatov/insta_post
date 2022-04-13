@@ -13,9 +13,9 @@ func (r *PostRepo) GetPost(postId string) (*pp.GetPostRes, error) {
 		countLike int64
 	)
 	res := pp.GetPostRes{}
-	queryPost := `SELECT post_id, user_id, title, description, image, created_at FROM post WHERE post_id=$1`
+	queryPost := `SELECT post_id, user_id, title, description, image, created_at FROM post WHERE post_id=$1 AND deleted_at IS NULL`
 	queryLike := `SELECT COUNT(likes) FROM likes WHERE post_id=$1`
-	queryPhoto := `SELECT type, base_code FROM post_photo WHERE image_id=$1`
+	queryPhoto := `SELECT type, base_code FROM post_photo WHERE image_id=$1 AND deleted_at IS NULL`
 
 	err := r.db.QueryRow(queryPost, postId).Scan(
 		&res.PostId,
@@ -28,6 +28,9 @@ func (r *PostRepo) GetPost(postId string) (*pp.GetPostRes, error) {
 	if err != nil && err != sql.ErrNoRows {
 		log.Println("Error while get post:", err)
 		return nil, err
+	}
+	if err == sql.ErrNoRows {
+		return &pp.GetPostRes{PostId: ""}, err
 	}
 
 	err = r.db.QueryRow(queryLike, postId).Scan(
@@ -48,5 +51,7 @@ func (r *PostRepo) GetPost(postId string) (*pp.GetPostRes, error) {
 	}
 	res.Image = img_type + base_code
 	res.Likes = countLike
+	res.CheckLike, _ = r.CheckLike(&pp.GetPostReq{UserId: res.UserId, PostId: postId})
+	
 	return &res, nil
 }

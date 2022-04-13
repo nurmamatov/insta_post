@@ -50,10 +50,17 @@ func (r *PostService) DeletePost(ctx context.Context, req *pp.DeletePostReq) (*p
 	}
 	return res, nil
 }
-func (r *PostService) Like(ctx context.Context, req *pp.LikePostReq) (*pp.Empty, error) {
+func (r *PostService) Like(ctx context.Context, req *pp.LikePostReq) (*pp.Bool, error) {
 	res, err := r.storage.Post().Like(req)
 	if err != nil {
-		return nil, err
+		return &pp.Bool{Result: false}, err
+	}
+	return &pp.Bool{Result: res}, nil
+}
+func (r *PostService) DeleteLike(ctx context.Context, req *pp.LikeDeleteReq) (*pp.Bool, error) {
+	res, err := r.storage.Post().DeleteLike(req)
+	if err != nil {
+		return &pp.Bool{Result: false}, err
 	}
 	return res, nil
 }
