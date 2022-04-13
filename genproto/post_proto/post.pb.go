@@ -27,12 +27,10 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type CreatePostReq struct {
-	PostId               string   `protobuf:"bytes,1,opt,name=post_id,json=postId,proto3" json:"post_id"`
-	UserId               string   `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id"`
-	Title                string   `protobuf:"bytes,3,opt,name=title,proto3" json:"title"`
-	Description          string   `protobuf:"bytes,4,opt,name=description,proto3" json:"description"`
-	Image                string   `protobuf:"bytes,5,opt,name=image,proto3" json:"image"`
-	CreatedAt            string   `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UserId               string   `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id"`
+	Title                string   `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
+	Description          string   `protobuf:"bytes,3,opt,name=description,proto3" json:"description"`
+	Image                string   `protobuf:"bytes,4,opt,name=image,proto3" json:"image"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -71,13 +69,6 @@ func (m *CreatePostReq) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_CreatePostReq proto.InternalMessageInfo
 
-func (m *CreatePostReq) GetPostId() string {
-	if m != nil {
-		return m.PostId
-	}
-	return ""
-}
-
 func (m *CreatePostReq) GetUserId() string {
 	if m != nil {
 		return m.UserId
@@ -106,15 +97,9 @@ func (m *CreatePostReq) GetImage() string {
 	return ""
 }
 
-func (m *CreatePostReq) GetCreatedAt() string {
-	if m != nil {
-		return m.CreatedAt
-	}
-	return ""
-}
-
 type GetPostReq struct {
-	PostId               string   `protobuf:"bytes,1,opt,name=post_id,json=postId,proto3" json:"post_id"`
+	UserId               string   `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id"`
+	PostId               string   `protobuf:"bytes,2,opt,name=post_id,json=postId,proto3" json:"post_id"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -153,6 +138,13 @@ func (m *GetPostReq) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetPostReq proto.InternalMessageInfo
 
+func (m *GetPostReq) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
+
 func (m *GetPostReq) GetPostId() string {
 	if m != nil {
 		return m.PostId
@@ -162,10 +154,8 @@ func (m *GetPostReq) GetPostId() string {
 
 type UpdatePostReq struct {
 	PostId               string   `protobuf:"bytes,1,opt,name=post_id,json=postId,proto3" json:"post_id"`
-	Title                string   `protobuf:"bytes,3,opt,name=title,proto3" json:"title"`
-	Description          string   `protobuf:"bytes,4,opt,name=description,proto3" json:"description"`
-	Image                string   `protobuf:"bytes,5,opt,name=image,proto3" json:"image"`
-	UpdatedAt            string   `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	Title                string   `protobuf:"bytes,2,opt,name=title,proto3" json:"title"`
+	Description          string   `protobuf:"bytes,3,opt,name=description,proto3" json:"description"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -221,20 +211,6 @@ func (m *UpdatePostReq) GetTitle() string {
 func (m *UpdatePostReq) GetDescription() string {
 	if m != nil {
 		return m.Description
-	}
-	return ""
-}
-
-func (m *UpdatePostReq) GetImage() string {
-	if m != nil {
-		return m.Image
-	}
-	return ""
-}
-
-func (m *UpdatePostReq) GetUpdatedAt() string {
-	if m != nil {
-		return m.UpdatedAt
 	}
 	return ""
 }
@@ -381,10 +357,8 @@ func (m *ListPostsRes) GetPosts() []*GetPostRes {
 }
 
 type LikePostReq struct {
-	LikeId               string   `protobuf:"bytes,1,opt,name=like_id,json=likeId,proto3" json:"like_id"`
 	PostId               string   `protobuf:"bytes,2,opt,name=post_id,json=postId,proto3" json:"post_id"`
 	UserId               string   `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id"`
-	Like                 bool     `protobuf:"varint,4,opt,name=like,proto3" json:"like"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -423,13 +397,6 @@ func (m *LikePostReq) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_LikePostReq proto.InternalMessageInfo
 
-func (m *LikePostReq) GetLikeId() string {
-	if m != nil {
-		return m.LikeId
-	}
-	return ""
-}
-
 func (m *LikePostReq) GetPostId() string {
 	if m != nil {
 		return m.PostId
@@ -444,11 +411,59 @@ func (m *LikePostReq) GetUserId() string {
 	return ""
 }
 
-func (m *LikePostReq) GetLike() bool {
-	if m != nil {
-		return m.Like
+type LikeDeleteReq struct {
+	UserId               string   `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id"`
+	PostId               string   `protobuf:"bytes,2,opt,name=post_id,json=postId,proto3" json:"post_id"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *LikeDeleteReq) Reset()         { *m = LikeDeleteReq{} }
+func (m *LikeDeleteReq) String() string { return proto.CompactTextString(m) }
+func (*LikeDeleteReq) ProtoMessage()    {}
+func (*LikeDeleteReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ff61d2b23ea440f3, []int{7}
+}
+func (m *LikeDeleteReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LikeDeleteReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LikeDeleteReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
 	}
-	return false
+}
+func (m *LikeDeleteReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LikeDeleteReq.Merge(m, src)
+}
+func (m *LikeDeleteReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *LikeDeleteReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_LikeDeleteReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LikeDeleteReq proto.InternalMessageInfo
+
+func (m *LikeDeleteReq) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
+
+func (m *LikeDeleteReq) GetPostId() string {
+	if m != nil {
+		return m.PostId
+	}
+	return ""
 }
 
 type Empty struct {
@@ -461,7 +476,7 @@ func (m *Empty) Reset()         { *m = Empty{} }
 func (m *Empty) String() string { return proto.CompactTextString(m) }
 func (*Empty) ProtoMessage()    {}
 func (*Empty) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ff61d2b23ea440f3, []int{7}
+	return fileDescriptor_ff61d2b23ea440f3, []int{8}
 }
 func (m *Empty) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -501,7 +516,7 @@ func (m *Message) Reset()         { *m = Message{} }
 func (m *Message) String() string { return proto.CompactTextString(m) }
 func (*Message) ProtoMessage()    {}
 func (*Message) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ff61d2b23ea440f3, []int{8}
+	return fileDescriptor_ff61d2b23ea440f3, []int{9}
 }
 func (m *Message) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -540,11 +555,12 @@ func (m *Message) GetMessage() string {
 type GetPostRes struct {
 	PostId               string   `protobuf:"bytes,1,opt,name=post_id,json=postId,proto3" json:"post_id"`
 	UserId               string   `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id"`
-	Title                string   `protobuf:"bytes,3,opt,name=title,proto3" json:"title"`
-	Description          string   `protobuf:"bytes,4,opt,name=description,proto3" json:"description"`
-	Image                string   `protobuf:"bytes,5,opt,name=image,proto3" json:"image"`
-	Likes                int64    `protobuf:"varint,6,opt,name=likes,proto3" json:"likes"`
-	CreatedAt            string   `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	CheckLike            bool     `protobuf:"varint,3,opt,name=check_like,json=checkLike,proto3" json:"check_like"`
+	Title                string   `protobuf:"bytes,4,opt,name=title,proto3" json:"title"`
+	Description          string   `protobuf:"bytes,5,opt,name=description,proto3" json:"description"`
+	Image                string   `protobuf:"bytes,6,opt,name=image,proto3" json:"image"`
+	Likes                int64    `protobuf:"varint,7,opt,name=likes,proto3" json:"likes"`
+	CreatedAt            string   `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -554,7 +570,7 @@ func (m *GetPostRes) Reset()         { *m = GetPostRes{} }
 func (m *GetPostRes) String() string { return proto.CompactTextString(m) }
 func (*GetPostRes) ProtoMessage()    {}
 func (*GetPostRes) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ff61d2b23ea440f3, []int{9}
+	return fileDescriptor_ff61d2b23ea440f3, []int{10}
 }
 func (m *GetPostRes) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -597,6 +613,13 @@ func (m *GetPostRes) GetUserId() string {
 	return ""
 }
 
+func (m *GetPostRes) GetCheckLike() bool {
+	if m != nil {
+		return m.CheckLike
+	}
+	return false
+}
+
 func (m *GetPostRes) GetTitle() string {
 	if m != nil {
 		return m.Title
@@ -632,6 +655,53 @@ func (m *GetPostRes) GetCreatedAt() string {
 	return ""
 }
 
+type Bool struct {
+	Result               bool     `protobuf:"varint,1,opt,name=result,proto3" json:"result"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Bool) Reset()         { *m = Bool{} }
+func (m *Bool) String() string { return proto.CompactTextString(m) }
+func (*Bool) ProtoMessage()    {}
+func (*Bool) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ff61d2b23ea440f3, []int{11}
+}
+func (m *Bool) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Bool) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Bool.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Bool) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Bool.Merge(m, src)
+}
+func (m *Bool) XXX_Size() int {
+	return m.Size()
+}
+func (m *Bool) XXX_DiscardUnknown() {
+	xxx_messageInfo_Bool.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Bool proto.InternalMessageInfo
+
+func (m *Bool) GetResult() bool {
+	if m != nil {
+		return m.Result
+	}
+	return false
+}
+
 func init() {
 	proto.RegisterType((*CreatePostReq)(nil), "post_proto.CreatePostReq")
 	proto.RegisterType((*GetPostReq)(nil), "post_proto.GetPostReq")
@@ -640,45 +710,49 @@ func init() {
 	proto.RegisterType((*ListPostsReq)(nil), "post_proto.ListPostsReq")
 	proto.RegisterType((*ListPostsRes)(nil), "post_proto.ListPostsRes")
 	proto.RegisterType((*LikePostReq)(nil), "post_proto.LikePostReq")
+	proto.RegisterType((*LikeDeleteReq)(nil), "post_proto.LikeDeleteReq")
 	proto.RegisterType((*Empty)(nil), "post_proto.Empty")
 	proto.RegisterType((*Message)(nil), "post_proto.Message")
 	proto.RegisterType((*GetPostRes)(nil), "post_proto.GetPostRes")
+	proto.RegisterType((*Bool)(nil), "post_proto.Bool")
 }
 
 func init() { proto.RegisterFile("post_proto/post.proto", fileDescriptor_ff61d2b23ea440f3) }
 
 var fileDescriptor_ff61d2b23ea440f3 = []byte{
-	// 472 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x53, 0xcd, 0xaa, 0xd3, 0x40,
-	0x14, 0x76, 0x6e, 0x9a, 0xc6, 0x7b, 0x62, 0x40, 0xc7, 0xab, 0x77, 0x0c, 0x18, 0xca, 0x88, 0xd8,
-	0x85, 0x54, 0xa8, 0x2b, 0xa1, 0x50, 0x6a, 0x15, 0x29, 0x54, 0x90, 0x48, 0xd7, 0xa5, 0x36, 0x83,
-	0x0c, 0x4d, 0x4d, 0xcc, 0x4c, 0x05, 0x97, 0x3e, 0x84, 0xe0, 0x53, 0xf8, 0x0e, 0xee, 0x5c, 0xfa,
-	0x08, 0x52, 0x5f, 0x44, 0x66, 0x92, 0x34, 0x33, 0xc5, 0x50, 0x17, 0x82, 0xbb, 0xf9, 0xce, 0x77,
-	0xce, 0x9c, 0xbf, 0xef, 0xc0, 0xad, 0x3c, 0x13, 0x72, 0x99, 0x17, 0x99, 0xcc, 0x1e, 0xa9, 0xe7,
-	0x40, 0x3f, 0x31, 0x34, 0x66, 0xfa, 0x15, 0x41, 0x30, 0x2d, 0xd8, 0x4a, 0xb2, 0x57, 0x99, 0x90,
-	0x31, 0x7b, 0x8f, 0x2f, 0xc1, 0xd3, 0x3c, 0x4f, 0x08, 0xea, 0xa1, 0xfe, 0x79, 0xdc, 0x55, 0x70,
-	0x96, 0x28, 0x62, 0x27, 0x58, 0xa1, 0x88, 0xb3, 0x92, 0x50, 0x70, 0x96, 0xe0, 0x0b, 0x70, 0x25,
-	0x97, 0x29, 0x23, 0x8e, 0x36, 0x97, 0x00, 0xf7, 0xc0, 0x4f, 0x98, 0x58, 0x17, 0x3c, 0x97, 0x3c,
-	0x7b, 0x47, 0x3a, 0x9a, 0x33, 0x4d, 0x2a, 0x8e, 0x6f, 0x57, 0x6f, 0x19, 0x71, 0xcb, 0x38, 0x0d,
-	0xf0, 0x5d, 0x80, 0xb5, 0x2e, 0x28, 0x59, 0xae, 0x24, 0xe9, 0x6a, 0xea, 0xbc, 0xb2, 0x4c, 0x24,
-	0xbd, 0x0f, 0xf0, 0x82, 0xc9, 0x53, 0xc5, 0xd2, 0xcf, 0x08, 0x82, 0x45, 0x9e, 0xfc, 0x4d, 0x5f,
-	0xff, 0xbc, 0xfc, 0x9d, 0xce, 0x6b, 0x96, 0x5f, 0x59, 0x26, 0x92, 0xf6, 0x21, 0x78, 0xc6, 0x52,
-	0x76, 0xba, 0x2c, 0xfa, 0x00, 0xae, 0xcd, 0xb9, 0xd0, 0x9d, 0x8a, 0xca, 0xb1, 0x1e, 0x3f, 0x32,
-	0xc7, 0x4f, 0x47, 0x96, 0xa3, 0xc0, 0x0f, 0xc1, 0x55, 0x5f, 0x08, 0x82, 0x7a, 0x4e, 0xdf, 0x1f,
-	0xde, 0x1e, 0x34, 0xeb, 0x1e, 0x1c, 0x46, 0x27, 0xe2, 0xd2, 0x89, 0xa6, 0xe0, 0xcf, 0xf9, 0xc6,
-	0x2c, 0x27, 0xe5, 0x1b, 0x66, 0x64, 0x51, 0xb0, 0xdc, 0x7e, 0x5d, 0xe7, 0x59, 0x9b, 0x2c, 0x1c,
-	0x4b, 0x16, 0x18, 0x3a, 0x2a, 0x56, 0x8f, 0xee, 0x6a, 0xac, 0xdf, 0xd4, 0x03, 0xf7, 0xf9, 0x36,
-	0x97, 0x1f, 0xe9, 0x3d, 0xf0, 0x5e, 0x32, 0x21, 0xd4, 0xc4, 0x08, 0x78, 0xdb, 0xf2, 0x59, 0xa5,
-	0xac, 0x21, 0xfd, 0x86, 0x8c, 0x65, 0x8b, 0xff, 0xae, 0xcc, 0x0b, 0x70, 0x55, 0x13, 0x42, 0x6f,
-	0xd5, 0x89, 0x4b, 0x70, 0xa4, 0x57, 0xef, 0x48, 0xaf, 0xc3, 0x4f, 0x0e, 0xf8, 0xaa, 0x81, 0xd7,
-	0xac, 0xf8, 0xc0, 0xd7, 0x0c, 0x8f, 0x01, 0x9a, 0x7b, 0xc3, 0x77, 0xcc, 0xe5, 0x58, 0x77, 0x18,
-	0xb6, 0xec, 0x0d, 0x3f, 0x01, 0xaf, 0x42, 0xf8, 0xcf, 0x2e, 0xed, 0xa1, 0x63, 0x80, 0xe6, 0x26,
-	0xec, 0xdc, 0xd6, 0xad, 0xb4, 0x7e, 0x30, 0x02, 0x68, 0xd4, 0x6b, 0x7f, 0x60, 0xa9, 0x3a, 0xbc,
-	0x69, 0x52, 0xf5, 0xa2, 0xa7, 0x10, 0x28, 0xa1, 0x2e, 0x04, 0x2b, 0xb4, 0x58, 0x31, 0x31, 0xbd,
-	0x4c, 0xb1, 0x87, 0x6d, 0x8c, 0xc0, 0x43, 0xe8, 0x28, 0xbd, 0xe2, 0x4b, 0xdb, 0xe3, 0xa0, 0xe0,
-	0xf0, 0x86, 0x49, 0x68, 0xb1, 0x3d, 0xbd, 0xfe, 0x7d, 0x1f, 0xa1, 0x1f, 0xfb, 0x08, 0xfd, 0xdc,
-	0x47, 0xe8, 0xcb, 0xaf, 0xe8, 0xca, 0x9b, 0xae, 0xa6, 0x1f, 0xff, 0x0e, 0x00, 0x00, 0xff, 0xff,
-	0xb7, 0xb2, 0x26, 0x0c, 0x22, 0x05, 0x00, 0x00,
+	// 511 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x53, 0xdd, 0x6a, 0x13, 0x41,
+	0x14, 0x76, 0xba, 0xc9, 0x6e, 0x72, 0x62, 0xa0, 0x8c, 0xda, 0x4c, 0x03, 0x2e, 0x61, 0xbc, 0x30,
+	0x17, 0x12, 0xb1, 0x5e, 0x15, 0x8a, 0xa1, 0xad, 0x22, 0x85, 0x0a, 0xb2, 0xd2, 0xeb, 0x18, 0xb3,
+	0x87, 0x3a, 0x64, 0xe3, 0xae, 0x3b, 0xd3, 0x82, 0x6f, 0xe2, 0xbb, 0xf8, 0x02, 0x5e, 0xfa, 0x08,
+	0x25, 0xbe, 0x88, 0xcc, 0xec, 0x26, 0x3b, 0x63, 0xbb, 0x29, 0xe4, 0x6e, 0xce, 0xff, 0x77, 0xe6,
+	0x3b, 0x1f, 0x3c, 0xc9, 0x52, 0xa9, 0x26, 0x59, 0x9e, 0xaa, 0xf4, 0xa5, 0x7e, 0x8e, 0xcc, 0x93,
+	0x42, 0xe5, 0xe6, 0xd7, 0xd0, 0x3d, 0xcd, 0x71, 0xaa, 0xf0, 0x63, 0x2a, 0x55, 0x84, 0xdf, 0x69,
+	0x0f, 0x82, 0x2b, 0x89, 0xf9, 0x44, 0xc4, 0x8c, 0x0c, 0xc8, 0xb0, 0x1d, 0xf9, 0xda, 0x3c, 0x8b,
+	0xe9, 0x63, 0x68, 0x2a, 0xa1, 0x12, 0x64, 0x3b, 0xc6, 0x5d, 0x18, 0x74, 0x00, 0x9d, 0x18, 0xe5,
+	0x2c, 0x17, 0x99, 0x12, 0xe9, 0x37, 0xe6, 0x99, 0x98, 0xed, 0xd2, 0x75, 0x62, 0x31, 0xbd, 0x44,
+	0xd6, 0x28, 0xea, 0x8c, 0xc1, 0xdf, 0x00, 0xbc, 0x47, 0x75, 0xef, 0xd0, 0x1e, 0x04, 0x06, 0xac,
+	0x88, 0xcb, 0xb1, 0xbe, 0x36, 0xcf, 0x62, 0xfe, 0x19, 0xba, 0x17, 0x59, 0xec, 0xe2, 0x5e, 0x65,
+	0x12, 0x3b, 0x73, 0x5b, 0xdc, 0x7c, 0x08, 0xdd, 0xb7, 0x98, 0xe0, 0xfd, 0x13, 0xf8, 0x73, 0x78,
+	0x78, 0x2e, 0xa4, 0x59, 0x46, 0x6e, 0xda, 0x86, 0x1f, 0x39, 0x89, 0x92, 0xbe, 0x80, 0xa6, 0x6e,
+	0x21, 0x19, 0x19, 0x78, 0xc3, 0xce, 0xc1, 0xde, 0xa8, 0x22, 0x66, 0xb4, 0xfe, 0x1d, 0x19, 0x15,
+	0x49, 0x7c, 0x0c, 0x9d, 0x73, 0x31, 0xbf, 0x0b, 0x8e, 0xf3, 0x35, 0xf6, 0x78, 0xcf, 0x19, 0x7f,
+	0x0c, 0x5d, 0xdd, 0xa0, 0xd8, 0x6a, 0xbb, 0x6f, 0x0f, 0xa0, 0xf9, 0x6e, 0x91, 0xa9, 0x1f, 0xfc,
+	0x19, 0x04, 0x1f, 0x50, 0xca, 0xe9, 0x25, 0x52, 0x06, 0xc1, 0xa2, 0x78, 0x96, 0x5d, 0x56, 0x26,
+	0xbf, 0x21, 0x16, 0xcb, 0xb2, 0x9e, 0x22, 0x0b, 0xc7, 0x8e, 0x83, 0xe3, 0x29, 0xc0, 0xec, 0x2b,
+	0xce, 0xe6, 0x93, 0x44, 0xcc, 0xd1, 0x6c, 0xd3, 0x8a, 0xda, 0xc6, 0xa3, 0x17, 0xa9, 0xa8, 0x6d,
+	0x6c, 0xa0, 0xb6, 0xb9, 0xe1, 0x24, 0x7d, 0xeb, 0x24, 0xb5, 0x57, 0x8f, 0x91, 0x2c, 0x18, 0x90,
+	0xa1, 0x17, 0x15, 0x86, 0x81, 0x60, 0x04, 0x12, 0x4f, 0xa6, 0x8a, 0xb5, 0x4c, 0x41, 0xbb, 0xf4,
+	0x1c, 0x2b, 0x1e, 0x42, 0xe3, 0x24, 0x4d, 0x13, 0xba, 0x07, 0x7e, 0x8e, 0xf2, 0x2a, 0x51, 0x66,
+	0xb5, 0x56, 0x54, 0x5a, 0x07, 0xbf, 0x3c, 0xe8, 0xe8, 0xfd, 0x3f, 0x61, 0x7e, 0x2d, 0x66, 0x48,
+	0xc7, 0x00, 0x95, 0xde, 0xe8, 0xbe, 0xcd, 0xb8, 0xa3, 0xc3, 0x7e, 0xcd, 0x31, 0xd0, 0x43, 0x08,
+	0x4a, 0x8b, 0xde, 0x9d, 0x52, 0x5f, 0x3a, 0x06, 0xa8, 0x34, 0xe3, 0xce, 0x76, 0xb4, 0x54, 0xdb,
+	0xe0, 0x08, 0xa0, 0x92, 0x84, 0xdb, 0xc0, 0x91, 0x4a, 0xff, 0x91, 0x1d, 0x5a, 0xdd, 0xc9, 0xa9,
+	0x3e, 0x3f, 0xa9, 0x2e, 0x24, 0xe6, 0x46, 0x01, 0x94, 0xd9, 0x59, 0xb6, 0x82, 0xfa, 0x75, 0x11,
+	0x49, 0x5f, 0x41, 0xc3, 0x50, 0xdf, 0x73, 0x33, 0xd6, 0xb2, 0xe8, 0xef, 0xda, 0x01, 0x43, 0xcd,
+	0xe1, 0x0a, 0xb5, 0x29, 0xdc, 0xff, 0xbf, 0x70, 0x2d, 0x87, 0xdb, 0xa5, 0x27, 0xbb, 0xbf, 0x97,
+	0x21, 0xf9, 0xb3, 0x0c, 0xc9, 0xcd, 0x32, 0x24, 0x3f, 0xff, 0x86, 0x0f, 0xbe, 0xf8, 0x26, 0xfa,
+	0xfa, 0x5f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x15, 0x00, 0x8b, 0x57, 0x5b, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -698,7 +772,8 @@ type PostServiceClient interface {
 	UpdatePost(ctx context.Context, in *UpdatePostReq, opts ...grpc.CallOption) (*GetPostRes, error)
 	DeletePost(ctx context.Context, in *DeletePostReq, opts ...grpc.CallOption) (*Message, error)
 	ListUserPosts(ctx context.Context, in *ListPostsReq, opts ...grpc.CallOption) (*ListPostsRes, error)
-	Like(ctx context.Context, in *LikePostReq, opts ...grpc.CallOption) (*Empty, error)
+	Like(ctx context.Context, in *LikePostReq, opts ...grpc.CallOption) (*Bool, error)
+	DeleteLike(ctx context.Context, in *LikeDeleteReq, opts ...grpc.CallOption) (*Bool, error)
 }
 
 type postServiceClient struct {
@@ -754,9 +829,18 @@ func (c *postServiceClient) ListUserPosts(ctx context.Context, in *ListPostsReq,
 	return out, nil
 }
 
-func (c *postServiceClient) Like(ctx context.Context, in *LikePostReq, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
+func (c *postServiceClient) Like(ctx context.Context, in *LikePostReq, opts ...grpc.CallOption) (*Bool, error) {
+	out := new(Bool)
 	err := c.cc.Invoke(ctx, "/post_proto.PostService/Like", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *postServiceClient) DeleteLike(ctx context.Context, in *LikeDeleteReq, opts ...grpc.CallOption) (*Bool, error) {
+	out := new(Bool)
+	err := c.cc.Invoke(ctx, "/post_proto.PostService/DeleteLike", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -770,7 +854,8 @@ type PostServiceServer interface {
 	UpdatePost(context.Context, *UpdatePostReq) (*GetPostRes, error)
 	DeletePost(context.Context, *DeletePostReq) (*Message, error)
 	ListUserPosts(context.Context, *ListPostsReq) (*ListPostsRes, error)
-	Like(context.Context, *LikePostReq) (*Empty, error)
+	Like(context.Context, *LikePostReq) (*Bool, error)
+	DeleteLike(context.Context, *LikeDeleteReq) (*Bool, error)
 }
 
 // UnimplementedPostServiceServer can be embedded to have forward compatible implementations.
@@ -792,8 +877,11 @@ func (*UnimplementedPostServiceServer) DeletePost(ctx context.Context, req *Dele
 func (*UnimplementedPostServiceServer) ListUserPosts(ctx context.Context, req *ListPostsReq) (*ListPostsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUserPosts not implemented")
 }
-func (*UnimplementedPostServiceServer) Like(ctx context.Context, req *LikePostReq) (*Empty, error) {
+func (*UnimplementedPostServiceServer) Like(ctx context.Context, req *LikePostReq) (*Bool, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Like not implemented")
+}
+func (*UnimplementedPostServiceServer) DeleteLike(ctx context.Context, req *LikeDeleteReq) (*Bool, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteLike not implemented")
 }
 
 func RegisterPostServiceServer(s *grpc.Server, srv PostServiceServer) {
@@ -908,6 +996,24 @@ func _PostService_Like_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PostService_DeleteLike_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LikeDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PostServiceServer).DeleteLike(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/post_proto.PostService/DeleteLike",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PostServiceServer).DeleteLike(ctx, req.(*LikeDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _PostService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "post_proto.PostService",
 	HandlerType: (*PostServiceServer)(nil),
@@ -935,6 +1041,10 @@ var _PostService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Like",
 			Handler:    _PostService_Like_Handler,
+		},
+		{
+			MethodName: "DeleteLike",
+			Handler:    _PostService_DeleteLike_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -965,45 +1075,31 @@ func (m *CreatePostReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.CreatedAt) > 0 {
-		i -= len(m.CreatedAt)
-		copy(dAtA[i:], m.CreatedAt)
-		i = encodeVarintPost(dAtA, i, uint64(len(m.CreatedAt)))
-		i--
-		dAtA[i] = 0x32
-	}
 	if len(m.Image) > 0 {
 		i -= len(m.Image)
 		copy(dAtA[i:], m.Image)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.Image)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x22
 	}
 	if len(m.Description) > 0 {
 		i -= len(m.Description)
 		copy(dAtA[i:], m.Description)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.Description)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x1a
 	}
 	if len(m.Title) > 0 {
 		i -= len(m.Title)
 		copy(dAtA[i:], m.Title)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.Title)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x12
 	}
 	if len(m.UserId) > 0 {
 		i -= len(m.UserId)
 		copy(dAtA[i:], m.UserId)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.UserId)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.PostId) > 0 {
-		i -= len(m.PostId)
-		copy(dAtA[i:], m.PostId)
-		i = encodeVarintPost(dAtA, i, uint64(len(m.PostId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1039,6 +1135,13 @@ func (m *GetPostReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.PostId)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.PostId)))
 		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.UserId) > 0 {
+		i -= len(m.UserId)
+		copy(dAtA[i:], m.UserId)
+		i = encodeVarintPost(dAtA, i, uint64(len(m.UserId)))
+		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
@@ -1068,33 +1171,19 @@ func (m *UpdatePostReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.UpdatedAt) > 0 {
-		i -= len(m.UpdatedAt)
-		copy(dAtA[i:], m.UpdatedAt)
-		i = encodeVarintPost(dAtA, i, uint64(len(m.UpdatedAt)))
-		i--
-		dAtA[i] = 0x32
-	}
-	if len(m.Image) > 0 {
-		i -= len(m.Image)
-		copy(dAtA[i:], m.Image)
-		i = encodeVarintPost(dAtA, i, uint64(len(m.Image)))
-		i--
-		dAtA[i] = 0x2a
-	}
 	if len(m.Description) > 0 {
 		i -= len(m.Description)
 		copy(dAtA[i:], m.Description)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.Description)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x1a
 	}
 	if len(m.Title) > 0 {
 		i -= len(m.Title)
 		copy(dAtA[i:], m.Title)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.Title)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x12
 	}
 	if len(m.PostId) > 0 {
 		i -= len(m.PostId)
@@ -1239,16 +1328,6 @@ func (m *LikePostReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.Like {
-		i--
-		if m.Like {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x20
-	}
 	if len(m.UserId) > 0 {
 		i -= len(m.UserId)
 		copy(dAtA[i:], m.UserId)
@@ -1263,10 +1342,44 @@ func (m *LikePostReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.LikeId) > 0 {
-		i -= len(m.LikeId)
-		copy(dAtA[i:], m.LikeId)
-		i = encodeVarintPost(dAtA, i, uint64(len(m.LikeId)))
+	return len(dAtA) - i, nil
+}
+
+func (m *LikeDeleteReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *LikeDeleteReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LikeDeleteReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.PostId) > 0 {
+		i -= len(m.PostId)
+		copy(dAtA[i:], m.PostId)
+		i = encodeVarintPost(dAtA, i, uint64(len(m.PostId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.UserId) > 0 {
+		i -= len(m.UserId)
+		copy(dAtA[i:], m.UserId)
+		i = encodeVarintPost(dAtA, i, uint64(len(m.UserId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1363,33 +1476,43 @@ func (m *GetPostRes) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.CreatedAt)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.CreatedAt)))
 		i--
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x42
 	}
 	if m.Likes != 0 {
 		i = encodeVarintPost(dAtA, i, uint64(m.Likes))
 		i--
-		dAtA[i] = 0x30
+		dAtA[i] = 0x38
 	}
 	if len(m.Image) > 0 {
 		i -= len(m.Image)
 		copy(dAtA[i:], m.Image)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.Image)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x32
 	}
 	if len(m.Description) > 0 {
 		i -= len(m.Description)
 		copy(dAtA[i:], m.Description)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.Description)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x2a
 	}
 	if len(m.Title) > 0 {
 		i -= len(m.Title)
 		copy(dAtA[i:], m.Title)
 		i = encodeVarintPost(dAtA, i, uint64(len(m.Title)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
+	}
+	if m.CheckLike {
+		i--
+		if m.CheckLike {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x18
 	}
 	if len(m.UserId) > 0 {
 		i -= len(m.UserId)
@@ -1404,6 +1527,43 @@ func (m *GetPostRes) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintPost(dAtA, i, uint64(len(m.PostId)))
 		i--
 		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Bool) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Bool) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Bool) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Result {
+		i--
+		if m.Result {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -1425,10 +1585,6 @@ func (m *CreatePostReq) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.PostId)
-	if l > 0 {
-		n += 1 + l + sovPost(uint64(l))
-	}
 	l = len(m.UserId)
 	if l > 0 {
 		n += 1 + l + sovPost(uint64(l))
@@ -1445,10 +1601,6 @@ func (m *CreatePostReq) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovPost(uint64(l))
 	}
-	l = len(m.CreatedAt)
-	if l > 0 {
-		n += 1 + l + sovPost(uint64(l))
-	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -1461,6 +1613,10 @@ func (m *GetPostReq) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.UserId)
+	if l > 0 {
+		n += 1 + l + sovPost(uint64(l))
+	}
 	l = len(m.PostId)
 	if l > 0 {
 		n += 1 + l + sovPost(uint64(l))
@@ -1486,14 +1642,6 @@ func (m *UpdatePostReq) Size() (n int) {
 		n += 1 + l + sovPost(uint64(l))
 	}
 	l = len(m.Description)
-	if l > 0 {
-		n += 1 + l + sovPost(uint64(l))
-	}
-	l = len(m.Image)
-	if l > 0 {
-		n += 1 + l + sovPost(uint64(l))
-	}
-	l = len(m.UpdatedAt)
 	if l > 0 {
 		n += 1 + l + sovPost(uint64(l))
 	}
@@ -1559,10 +1707,6 @@ func (m *LikePostReq) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.LikeId)
-	if l > 0 {
-		n += 1 + l + sovPost(uint64(l))
-	}
 	l = len(m.PostId)
 	if l > 0 {
 		n += 1 + l + sovPost(uint64(l))
@@ -1571,8 +1715,25 @@ func (m *LikePostReq) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovPost(uint64(l))
 	}
-	if m.Like {
-		n += 2
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *LikeDeleteReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.UserId)
+	if l > 0 {
+		n += 1 + l + sovPost(uint64(l))
+	}
+	l = len(m.PostId)
+	if l > 0 {
+		n += 1 + l + sovPost(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1622,6 +1783,9 @@ func (m *GetPostRes) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovPost(uint64(l))
 	}
+	if m.CheckLike {
+		n += 2
+	}
 	l = len(m.Title)
 	if l > 0 {
 		n += 1 + l + sovPost(uint64(l))
@@ -1640,6 +1804,21 @@ func (m *GetPostRes) Size() (n int) {
 	l = len(m.CreatedAt)
 	if l > 0 {
 		n += 1 + l + sovPost(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Bool) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Result {
+		n += 2
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1684,38 +1863,6 @@ func (m *CreatePostReq) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PostId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPost
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPost
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPost
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.PostId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field UserId", wireType)
 			}
 			var stringLen uint64
@@ -1746,7 +1893,7 @@ func (m *CreatePostReq) Unmarshal(dAtA []byte) error {
 			}
 			m.UserId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
 			}
@@ -1778,7 +1925,7 @@ func (m *CreatePostReq) Unmarshal(dAtA []byte) error {
 			}
 			m.Title = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
 			}
@@ -1810,7 +1957,7 @@ func (m *CreatePostReq) Unmarshal(dAtA []byte) error {
 			}
 			m.Description = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 5:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Image", wireType)
 			}
@@ -1841,38 +1988,6 @@ func (m *CreatePostReq) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Image = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 6:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPost
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPost
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPost
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.CreatedAt = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1926,6 +2041,38 @@ func (m *GetPostReq) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UserId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPost
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPost
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPost
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UserId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field PostId", wireType)
 			}
@@ -2040,7 +2187,7 @@ func (m *UpdatePostReq) Unmarshal(dAtA []byte) error {
 			}
 			m.PostId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
 			}
@@ -2072,7 +2219,7 @@ func (m *UpdatePostReq) Unmarshal(dAtA []byte) error {
 			}
 			m.Title = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
 			}
@@ -2103,70 +2250,6 @@ func (m *UpdatePostReq) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Description = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Image", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPost
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPost
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPost
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Image = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 6:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field UpdatedAt", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPost
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPost
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPost
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.UpdatedAt = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -2470,38 +2553,6 @@ func (m *LikePostReq) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: LikePostReq: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LikeId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowPost
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthPost
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthPost
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.LikeId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field PostId", wireType)
@@ -2566,11 +2617,62 @@ func (m *LikePostReq) Unmarshal(dAtA []byte) error {
 			}
 			m.UserId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Like", wireType)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPost(dAtA[iNdEx:])
+			if err != nil {
+				return err
 			}
-			var v int
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthPost
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *LikeDeleteReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPost
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LikeDeleteReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LikeDeleteReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UserId", wireType)
+			}
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowPost
@@ -2580,12 +2682,56 @@ func (m *LikePostReq) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			m.Like = bool(v != 0)
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPost
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPost
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UserId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PostId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPost
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPost
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPost
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PostId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipPost(dAtA[iNdEx:])
@@ -2836,6 +2982,26 @@ func (m *GetPostRes) Unmarshal(dAtA []byte) error {
 			m.UserId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CheckLike", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPost
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.CheckLike = bool(v != 0)
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
 			}
@@ -2867,7 +3033,7 @@ func (m *GetPostRes) Unmarshal(dAtA []byte) error {
 			}
 			m.Title = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
 			}
@@ -2899,7 +3065,7 @@ func (m *GetPostRes) Unmarshal(dAtA []byte) error {
 			}
 			m.Description = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 5:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Image", wireType)
 			}
@@ -2931,7 +3097,7 @@ func (m *GetPostRes) Unmarshal(dAtA []byte) error {
 			}
 			m.Image = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 7:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Likes", wireType)
 			}
@@ -2950,7 +3116,7 @@ func (m *GetPostRes) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 7:
+		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
 			}
@@ -2982,6 +3148,77 @@ func (m *GetPostRes) Unmarshal(dAtA []byte) error {
 			}
 			m.CreatedAt = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPost(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthPost
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Bool) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPost
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Bool: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Bool: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Result", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPost
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Result = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipPost(dAtA[iNdEx:])
