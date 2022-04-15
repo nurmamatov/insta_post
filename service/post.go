@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	pc "tasks/Instagram_clone/insta_post/genproto/comment_proto"
 	pp "tasks/Instagram_clone/insta_post/genproto/post_proto"
 	l "tasks/Instagram_clone/insta_post/pkg/logger"
@@ -45,13 +44,14 @@ func (r *PostService) GetPost(ctx context.Context, req *pp.GetPostReq) (*pp.GetP
 	}
 
 	ress, err := r.client.CommentService().GetComment(context.Background(), &pc.GetCommentReq{PostId: res.PostId})
-	fmt.Println(ress)
+
 	if err != nil {
 		r.logger.Error("Error: ", l.Error(err))
 		return nil, err
 	}
-	for _, j := range ress.Comments {
-		res.Comments = append(res.Comments, &pp.Comment{UserId: j.UserId, Text: j.Text})
+	for _, i := range ress.Comments {
+		Res := pp.Comment{CommentId: i.CommentId, Text: i.Text, UserId: i.UserId}
+		res.Comments = append(res.Comments, &Res)
 	}
 
 	return res, nil
