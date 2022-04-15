@@ -9,7 +9,7 @@ import (
 func (r *PostRepo) DeletePost(req *pp.DeletePostReq) (*pp.Message, error) {
 
 	now := time.Now().Format(time.RFC3339)
-	queryPost := `UPDATE post SET deleted_at=$2 WHERE post_id=$1`
+	queryPost := `UPDATE post SET deleted_at=$2 WHERE post_id=$1 AND deleted_at IS NULL`
 
 	res, err := r.GetPost(req.PostId)
 	if err != nil && res.PostId == "" {

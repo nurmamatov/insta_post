@@ -18,8 +18,6 @@ CREATE TABLE IF NOT EXISTS post (
 );
 
 CREATE TABLE IF NOT EXISTS likes (
-  like_id UUID,
   post_id UUID REFERENCES post(post_id),
   user_id UUID NOT NULL,
-  likee   boolean
 );

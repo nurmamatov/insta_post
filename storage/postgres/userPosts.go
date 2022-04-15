@@ -11,7 +11,7 @@ func (r *PostRepo) UserPostsList(req *pp.ListPostsReq) (*pp.ListPostsRes, error)
 	var (
 		resList pp.ListPostsRes
 	)
-	queryUser := `SELECT post_id FROM post WHERE user_id=$1`
+	queryUser := `SELECT post_id FROM post WHERE user_id=$1 AND deleted_at IS NULL`
 	rows, err := r.db.Query(queryUser, req.UserId)
 	if err != nil {
 		log.Println("Error while Users posts list", err)
