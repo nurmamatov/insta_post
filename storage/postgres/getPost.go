@@ -51,7 +51,7 @@ func (r *PostRepo) GetPost(postId string) (*pp.GetPostRes, error) {
 	}
 	res.Image = img_type + base_code
 	res.Likes = countLike
-	res.CheckLike, _ = r.CheckLike(&pp.GetPostReq{UserId: res.UserId, PostId: postId})
-	
+	res.CheckLike, _ = r.CheckLike(&pp.LikePostReq{UserId: res.UserId, PostId: postId})
+
 	return &res, nil
 }

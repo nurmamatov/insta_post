@@ -3,14 +3,12 @@ package postgres
 import (
 	"log"
 	pp "tasks/Instagram_clone/insta_post/genproto/post_proto"
-
-	"github.com/google/uuid"
 )
 
 func (r *PostRepo) Like(req *pp.LikePostReq) (bool, error) {
 
-	query := `INSERT INTO likes (like_id, post_id, user_id, likes) VALUES($1,$2,$3,$4)`
-	_, err := r.db.Exec(query, uuid.New(), req.PostId, req.UserId, true)
+	query := `INSERT INTO likes (post_id, user_id) VALUES($1,$2)`
+	_, err := r.db.Exec(query, req.PostId, req.UserId)
 	if err != nil {
 		log.Println("Error while insert like", err)
 		return false, err
@@ -18,16 +16,16 @@ func (r *PostRepo) Like(req *pp.LikePostReq) (bool, error) {
 
 	return true, nil
 }
-func (r *PostRepo) CheckLike(req *pp.GetPostReq) (bool, error) {
+func (r *PostRepo) CheckLike(req *pp.LikePostReq) (bool, error) {
 	var (
-		checkLike bool
+		checkLike int
 	)
-	query := `SELECT likes FROM likes WHERE user_id=$1 AND post_id=$2`
+	query := `SELECT COUNT(*) FROM likes WHERE user_id=$1 AND post_id=$2`
 	err := r.db.QueryRow(query, req.UserId, req.PostId).Scan(&checkLike)
 	if err != nil {
 		return false, err
 	}
-	if checkLike == bool(true) {
+	if checkLike == 1 {
 		return true, nil
 	} else {
 		return false, nil

@@ -22,8 +22,8 @@ type Config struct {
 	CommentServiceHost string
 	CommentServicePort int
 
-	UserServiceHost string
-	UserServicePort int
+	// UserServiceHost string
+	// UserServicePort int
 }
 
 // Load loads environment vars and inflates Config
@@ -44,8 +44,8 @@ func Load() Config {
 	c.CommentServiceHost = cast.ToString(GetFromOs("COMMENT_SERVICE_HOST", "localhost"))
 	c.CommentServicePort = cast.ToInt(GetFromOs("COMMENT_SERVICE_PORT", 9001))
 
-	c.UserServiceHost = cast.ToString(GetFromOs("USER_SERVICE_HOST", "localhost"))
-	c.UserServicePort = cast.ToInt(GetFromOs("USER_SERVICE_PORT", 9002))
+	// c.UserServiceHost = cast.ToString(GetFromOs("USER_SERVICE_HOST", "localhost"))
+	// c.UserServicePort = cast.ToInt(GetFromOs("USER_SERVICE_PORT", 9002))
 
 	return c
 }
