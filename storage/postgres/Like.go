@@ -6,6 +6,10 @@ import (
 )
 
 func (r *PostRepo) Like(req *pp.LikePostReq) (bool, error) {
+	res, _ := r.CheckLike(req)
+	if res == true {
+		return false, nil
+	}
 
 	query := `INSERT INTO likes (post_id, user_id) VALUES($1,$2)`
 	_, err := r.db.Exec(query, req.PostId, req.UserId)
@@ -30,6 +34,17 @@ func (r *PostRepo) CheckLike(req *pp.LikePostReq) (bool, error) {
 	} else {
 		return false, nil
 	}
+}
+func (r *PostRepo) PostLikes(req *pp.LikePostReq) (int64, error) {
+	var (
+		countLike int64
+	)
+	query := `SELECT COUNT(*) FROM likes WHERE post_id=$1`
+	err := r.db.QueryRow(query, req.PostId).Scan(&countLike)
+	if err != nil {
+		return 0, err
+	}
+	return countLike, nil
 }
 func (r *PostRepo) DeleteLike(req *pp.LikeDeleteReq) (*pp.Bool, error) {
 	query := `DELETE FROM likes WHERE post_id=$1 AND user_id=$2`
