@@ -6,13 +6,13 @@ import (
 )
 
 func (r *PostRepo) Like(req *pp.LikePostReq) (bool, error) {
-	res, _ := r.CheckLike(req)
-	if res == true {
+	res, err := r.CheckLike(req)
+	if err != nil || res == bool(true) {
 		return false, nil
 	}
 
 	query := `INSERT INTO likes (post_id, user_id) VALUES($1,$2)`
-	_, err := r.db.Exec(query, req.PostId, req.UserId)
+	_, err = r.db.Exec(query, req.PostId, req.UserId)
 	if err != nil {
 		log.Println("Error while insert like", err)
 		return false, err
